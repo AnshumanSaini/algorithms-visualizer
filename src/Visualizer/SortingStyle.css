@@ -1,0 +1,12 @@
+.container-bar{
+    position: absolute;
+    left: 250px;
+}
+
+.bar{
+    width: 3px;
+    background-color: blueviolet;
+    display: inline-block;
+    margin: 0 2px;
+    padding: ;
+}
