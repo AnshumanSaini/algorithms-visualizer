@@ -43,7 +43,7 @@ const Sorting = () => {
   }
 
   //This function perform the changes in the bar in the frontend.
-  const sortTheArray = (arr) => {
+  const sortTheArray = async (arr) => {
     const ele = document.getElementsByClassName("bar");
 
     for (let i = 0; i < arr.length; ++i) {
@@ -55,11 +55,11 @@ const Sorting = () => {
         const minBarStyle = ele[minInd].style;
         const maxBarStyle = ele[maxInd].style;
 
-        setTimeout(() => {
+         setTimeout(() => {
           setTimeout(() => {
             minBarStyle.backgroundColor = "red";
             maxBarStyle.backgroundColor = "red";
-          }, i*5);
+          }, 1000);
           const hmin = minBarStyle.height;
           const hmax = maxBarStyle.height;
           //console.log(`${hmin}`);
@@ -69,7 +69,7 @@ const Sorting = () => {
           setTimeout(() => {
             minBarStyle.backgroundColor = "blueviolet";
             maxBarStyle.backgroundColor = "blueviolet";
-          }, i*5);
+          });
           
         }, i * 5);
       }

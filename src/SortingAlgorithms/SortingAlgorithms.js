@@ -4,6 +4,9 @@ function swap(piles, a, b) {
   piles[b] = tempVal;
 }
 
+
+
+
 function selectionSort(piles) {
 
   let statesInOrder = [];
@@ -20,6 +23,9 @@ function selectionSort(piles) {
   }
   return statesInOrder;
 }
+
+
+
 
 function bubbleSort(piles) {
   let statesInOrder = [];
@@ -40,6 +46,9 @@ function bubbleSort(piles) {
   return statesInOrder;
 }
 
+
+
+
 function insertionSort(piles) {
   let statesInOrder = [];
     for (let i = 1; i < piles.length; i++) {
@@ -52,6 +61,9 @@ function insertionSort(piles) {
     console.log(statesInOrder);
     return statesInOrder;
 }
+
+
+
 
 function mergeSort(piles) {
   let statesInOrder = [];
@@ -73,54 +85,56 @@ function mSort(piles, statesInOrder, l, r)
 
 function merge(piles, statesInOrder, l, m, r)
 {
-  let i=l;
-  let k=l;
-  let j=m+1;
-  let auxiliary = piles.slice();
-
-  while(i<=m && j<=r)
+  for (let i = l+1; i <= r; i++) 
   {
-    if(auxiliary[i]<=auxiliary[j])
+    for (let j = i; j > 0 && piles[j - 1] > piles[j]; j--) 
     {
-      piles[k]=auxiliary[i];
-      const temp = {piles: piles.slice(), changing: [k, j]};
+      swap(piles, j, j - 1);
+      const temp = { piles: piles.slice(), changing: [j - 1, j] };
       statesInOrder.push(temp);
-      ++k;
-      ++i;
     }
-    else
-    {
-      piles[k]=auxiliary[j];
-      const temp = {piles: piles.slice(), changing: [k, j]};
-      statesInOrder.push(temp);
-      ++j;
-      ++k;
-    }
-  }
-
-  while(i<=m)
-  {
-    piles[k]=auxiliary[i];
-    const temp = {piles: piles.slice(), changing: [k, i]};
-    statesInOrder.push(temp);
-    ++i;
-    ++k;
-  }
-
-  while(j<=r)
-  {
-    piles[k]=auxiliary[j];
-    const temp = {piles: piles.slice(), changing: [k, j]};
-    statesInOrder.push(temp);
-    ++j;
-    ++k;
   }
 }
 
+
+
 function quickSort(piles) {
   let statesInOrder = [];
-  
+  doQuickSort(statesInOrder, 0, piles.length-1, piles);
   return statesInOrder;
+}
+
+function doQuickSort(statesInOrder, start, end, piles)
+{
+  if(start<end)
+  {
+    let pivot = partition(statesInOrder, start, end, piles);
+    doQuickSort(statesInOrder, start, pivot-1, piles);
+    doQuickSort(statesInOrder, pivot+1, end, piles);
+  }
+}
+
+function partition(statesInOrder, start, end, piles)
+{
+  let pivot = piles[end];
+  let i=start-1;
+
+  for(let j=start;j<end;++j)
+  {
+    if(piles[j]<pivot)
+    {
+      ++i;
+      swap(piles, i, j);
+      const temp = {piles: piles.slice(), changing: [i, j]};
+      statesInOrder.push(temp);
+    }
+  }
+  swap(piles, i+1, end);
+  const temp = {piles: piles.slice(), changing: [i+1, end]};
+  statesInOrder.push(temp);
+
+  return (i+1);
+
 }
 
 export { selectionSort, bubbleSort, insertionSort, mergeSort, quickSort, swap };
